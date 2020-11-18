@@ -6,11 +6,14 @@ library(genefilter)
 library(quadprog)
 
 
-projectCellTypeWithError = function(YIN, modelType = c("mouseHumanHybrid", "mouse")){
+projectCellTypeWithError = function(YIN, modelType = c("mouseHumanHybrid", "mouse", "ownModel"), ownModelData = NA){
   
   sampleDup = 0
-  
-  load(paste("models/", modelType, "Model.Rdata", sep = ""))
+  if(modelType != "ownModel"){
+    load(paste("models/", modelType, "Model.Rdata", sep = ""))
+  }else{
+    model = ownModelData
+  }
   
   ## subset the CpGs in YIN 
   YIN = YIN[rownames(model$coefEsts),]

@@ -21,8 +21,23 @@ projectCellType(YIN, model)
 ## model: 
 # should be one of the model options
 # "mouseHumanHybrid" "mouse"
+# if "ownModel" is used, the model should be in the same format as the other model inputs
+# a list with the first list object containing a matrix of CpGs and model coeficients per cell type
+# model can be created using pickCompProbes
 
 ## Output:
 # proportions for each cell type predicted
 # error for prediction, calculated using DSRMSE
 # number of CpGs missing (of the predictive CpGs)
+
+
+## To create a deconvolution model from your own reference data, use
+pickCompProbes(rawbetas, cellInd, cellTypes = NULL, numProbes = 50, probeSelect = probeSelectIN)
+
+## where rawbetas are the betas matrix: 
+# columns are samples
+# rows are cpgs with rownames in format cg********* 
+# cellInd: unique names of cell types available 
+# cellTypes: a factor list of cell types
+# numProbes: the number of cpgs used toe predict per cell type
+

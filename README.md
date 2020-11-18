@@ -11,7 +11,9 @@ Deconvolution models currently available are:
     - Created in custom Illumina array, HorvathMammalMethylChip40, also applicable to Illumina EPIC (850k) array. 
     - Created using prefrontal cortex.
     - Differentiates between neuronal (NeuN+) and non-neuronal (NeuN-) cell types.
-
+- Own model
+    - You can apply your own reference data, which should be in the same format as the above models containing cpg coefficients, containing cpg id's as rownames, cell types as columns.
+    - The deconvolution model can be made using function pickCompProbes.R
 
 Coming soon:
 - Human blood 
