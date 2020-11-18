@@ -3,11 +3,11 @@
 For usage of models, see HowToApplyDSRMSE.R
 
 Deconvolution models currently available are:
-- Mouse 
+- Mouse (IN THE PROCESS OF VALIDATION)
     - Created in custom Illumina array, HorvathMammalMethylChip40. 
     - Created using prefrontal cortex.
     - Differentiates between neuronal (NeuN+) and non-neuronal (NeuN-) cell types.
-- Mouse human hybrid 
+- Mouse human hybrid (IN THE PROCESS OF VALIDATION)
     - Created in custom Illumina array, HorvathMammalMethylChip40, also applicable to Illumina EPIC (850k) array. 
     - Created using prefrontal cortex.
     - Differentiates between neuronal (NeuN+) and non-neuronal (NeuN-) cell types.
