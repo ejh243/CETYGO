@@ -16,7 +16,7 @@ Deconvolution models currently available are:
 Coming soon:
 - Human blood 
   - Created in Illumina 450k, applicable to 450k and EPIC arrays.
-  - Differentiates between CD8 T cells, CD4 T cells, natural killer cells,  B cells, monocytes, and Neutrophils.
+  - Differentiates between CD8 T cells, CD4 T cells, natural killer cells,  B cells, monocytes, and neutrophils.
 - Human brain
   - Created in post mortem prefrontal cortex, profiled in EPIC, applicable to 450k and EPIC arrays.
   - Differentiates between neurons (NeuN+), olgodendrocytes (Sox10+), glia (IRF8+) and other cell types.
