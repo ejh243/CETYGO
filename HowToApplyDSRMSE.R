@@ -4,9 +4,9 @@
 ## Dorothea Seiler Vellame ds420@exeter.ac.uk
 
 ## source the functions 
-# replace PATHTOGITHUBFOLDERLOCALLY with own local path that github folder has been pulled to
+# replace PathToGithubFolderLocally with own local path that github folder has been pulled to
 
-setwd(PATHTOGITHUBFOLDERLOCALLY)
+setwd(PathToGithubFolderLocally)
 source("projectCellTypeWithError.R")
 
 ## to predict proportions in your own data use the following
