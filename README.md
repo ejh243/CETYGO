@@ -7,3 +7,6 @@ Deconvolution models currently available are:
 - Mouse (IN THE PROCESS OF VALIDATION)
     - Estimates proportion of cells that are NeuN+ve (neuronal) and NeuN-ve (non-neuronal).
 	- Reference data generated using the custom Illumina array, HorvathMammalMethylChip40.
+	
+	
+Scripts are adapted from minfi (http://bioconductor.org/packages/release/bioc/html/minfi.html) with the added error metric utility.
