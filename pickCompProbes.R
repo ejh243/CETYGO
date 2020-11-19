@@ -1,5 +1,5 @@
-## Function adapted from minfi 
-## functions for estimate cell counts edited to take matrices rather than mset
+## Deconvolution model creation from minfi (http://bioconductor.org/packages/release/bioc/html/minfi.html) edited to take matrices rather than mset
+
 library(genefilter)
 library(quadprog)
 
