@@ -1,4 +1,4 @@
-## Cell type prediction from minfi adapted by Eilis Hannon
+## Cell type prediction from minfi (http://bioconductor.org/packages/release/bioc/html/minfi.html) with the added error metric utility
 ## functions for estimate cell counts edited to take matrices rather than mset
 ## Error metric by Dorothea Seiler Vellame
 
