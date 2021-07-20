@@ -10,7 +10,7 @@ setwd(PathToGithubFolderLocally)
 source("projectCellTypeWithError.R")
 
 ## to predict proportions in your own data use the following
-projectCellType(YIN, model)
+projectCellType(YIN, modelType = "ownModel", ownModelData = model)
 
 ## YIN:
 # should be a matrix of DNAm betas
@@ -21,7 +21,7 @@ projectCellType(YIN, model)
 ## model: 
 # should be one of the model options
 # "mouseHumanHybrid" "mouse"
-# if "ownModel" is used, the model should be in the same format as the other model inputs
+# if modelType "ownModel" is used, the ownModelData should be in the same format as the other model inputs
 # a list with the first list object containing a matrix of CpGs and model coeficients per cell type
 # model can be created using pickCompProbes
 
