@@ -1,0 +1,55 @@
+---
+title: "Quantifying the error associated with estimating cellular composition from DNA methylation profiles"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{introduction}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(CETYGO)
+```
+
+
+## Introduction
+
+We have described an accuracy metric that quantifies the CEll TYpe deconvolution GOodness (CETYGO)  score of a set of cellular heterogeneity variables derived from a genome-wide DNA methylation profile for an individual sample. 
+
+The mathematical details of the CETYGO score can be found in our manuscript:  XXX. Please cite this if you use our R package.
+
+## Terminology 
+
+Reference data - the set of DNA methylation profiles for purified cell types the proportions of which will be estimated from the test data. 
+
+Test data - the set of DNA methylation profiles, for which we wish to estimate cellular composition. They are likely to be from a bulk tissue.
+
+CETYGO score - this the metric we developed to assess the accuracy of a profile of estimated cellular composition proportions for an individual sample. By definition, 0 is the lowest value CETYGO can take and would indicate a perfect estimate. Higher values of CETGYO are indicative of larger errors and therefore a less accurate estimation of cellular composition.
+
+
+## Install the package
+
+
+
+
+## Calculating the CETYGO score using pregenerated model
+
+Within the CETYGO package we provide a pretrained model to estimate the 
+
+First we need to load the test DNA methylation data. For the purposes of this tutorial, we have provided 10 whole blood profiles generated with the 450K array. These can be loaded as follows.
+
+
+
+
+## Training model prior to calculating the CETYGO score using pregenerated model
+
+Instead users might wish to follow the standardpipeline implemented in minfi where the reference data and test data 

@@ -12,6 +12,7 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Depends:
+    R (>= 2.10)
 Imports:
     minfi,
 	genefilter,
@@ -25,4 +26,3 @@ Suggests:
 VignetteBuilder: knitr
 URL: https://github.com/ejh243/CETYGO
 BugReports: https://github.com/ejh243/CETYGO/issues
-
