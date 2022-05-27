@@ -1,0 +1,12 @@
+importFrom(genefilter, rowFtests)
+importFrom(quadprog, solve.QP)
+
+export(RMSE)
+export(createBulkProfiles)
+export(estimateCellCountsWithError)
+export(generateCellProportions)
+export(pickCompProbesMatrix)
+export(projectCellTypeWithError)
+export(runNoiseSimulations)
+
+
