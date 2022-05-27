@@ -10,3 +10,5 @@ Deconvolution models currently available are:
 	
 	
 Scripts are adapted from minfi (http://bioconductor.org/packages/release/bioc/html/minfi.html) with the added error metric utility.
+
+
