@@ -21,3 +21,10 @@ sites missing from the model.
 Estimate the cellular composition from a DNA methylation profile and calculate
 the CETYGO score error metric associated with this estimate.
 }
+\examples{
+# using pre-trained model for whole blood provided with the package and sample whole blood profiles
+rowIndex<-rownames(bulkdata)[rownames(bulkdata) \%in\% rownames(modelBloodCoef)]
+predProp<-projectCellTypeWithError(bulkdata, modelBloodCoef[rowIndex,])
+
+head(predProp)
+}

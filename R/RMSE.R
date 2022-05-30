@@ -7,7 +7,15 @@
 
 #' @return the root mean square error calculated from the two input vectors
 #' @export
+#'
+#' @examples
+#' expected<-c(0.4,0.5,0.2)
+#' observed<-c(0.38, 0.47, 0.25)
 
 RMSE = function(m, o){
-    sqrt(mean((m - o)^2))
+	if(length(m) == length(o)){
+		return(sqrt(mean((m - o)^2)))
+	} else {
+		stop("Input vectors are not the same length")
+	}
 }

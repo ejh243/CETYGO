@@ -7,13 +7,16 @@
 createBulkProfiles(purifiedBetas, matrixSimProp)
 }
 \arguments{
-\item{purifiedBetas}{}
+\item{purifiedBetas}{A matrix with DNA methylation levels for reference cell types. Format is one column per cell type.}
 
-\item{matrixSimProp}{}
+\item{matrixSimProp}{A matrix of proportions to combine reference cell types. Each row represents a different combination of cell types. Number of columns must match the number of columns in purifiedBetas, unless the last column is the proportion of noise, and must be labelled as such.}
 }
 \value{
-
+A matrix of DNA methylation levels, with the same number of rows as rows in purifiedBetas and the same number of columns as rows in matrixSimProp.
 }
 \description{
-createBulkProfiles
+Given some reference DNA methylation profiles, this function combines them in a
+weighted sum using the
+user-provided proportions to construct bulk tissue profiles in known ratios. There is
+also the option to specifiy the addition of a proportion of noise. If this is required #' a random vector of DNA methylation levels is generated from a uniform distribution.
 }

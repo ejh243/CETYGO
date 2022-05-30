@@ -9,6 +9,13 @@
 #' This input can be generated with the pickCompProbesMatrix()$coefs
 #' @return A matrix with the estimated proportion of cell types, CETYGO and the number of
 #' sites missing from the model.
+#'
+#' @examples
+#' # using pre-trained model for whole blood provided with the package and sample whole blood profiles
+#' rowIndex<-rownames(bulkdata)[rownames(bulkdata) %in% rownames(modelBloodCoef)]
+#' predProp<-projectCellTypeWithError(bulkdata, modelBloodCoef[rowIndex,])
+#' 
+#' head(predProp)
 #' @export
 projectCellTypeWithError = function(YIN, coefs){
 
