@@ -2,7 +2,7 @@
 % Please edit documentation in R/runNoiseSimulations.R
 \name{runNoiseSimulations}
 \alias{runNoiseSimulations}
-\title{Perform simulations to test deconvolution with proportion of noise}
+\title{Perform simulations to test deconvolution model with constructed bulk tissue profiles.}
 \usage{
 runNoiseSimulations(
   trainBetas,
@@ -13,19 +13,22 @@ runNoiseSimulations(
 )
 }
 \arguments{
-\item{trainBetas}{}
+\item{trainBetas}{A matrix of reference DNA methylation profiles, where rows are sites and columns are samples. Note you need multiple samples from the same cell type.}
 
-\item{trainCellTypes}{}
+\item{trainCellTypes}{A vector of which cell types to include in the deconcolution model.}
 
-\item{trainCellInd}{}
+\item{trainCellInd}{A vector indicating which cell type each column in trainBetas comes from.}
 
-\item{testBetas}{}
+\item{testBetas}{A matrix with DNA methylation levels for reference cell types to construct the bulk tissue profiles from. Format is one column per cell type. Requires the same number of rows as trainBetas and in the same order.}
 
-\item{matrixSimProp}{}
+\item{matrixSimProp}{A matrix of proportions to combine reference cell types. Each row represents a different combination of cell types. Number of columns must match the number of columns in testBetas, unless the last column is the proportion of "Noise", and must be labelled as such.}
 }
 \value{
-
+A matrix with predicted cellular compositions and CETYGO score for each simulated bulk tissue profile.
 }
 \description{
-createBulkProfiles
+Function to implement the Houseman deconvolution method for a provided set reference data and apply it to a series of  bulk profiles constructed from user-provided proportions. The function first selects the sites that will be used for the deconvolutions. It then generates test bulk profiles which are weighted sums of reference profiles. Finally it calculates estimates of the cellular composition and the CETYGO score for each simulated bulk profile.
+}
+\details{
+We recommend that the training reference data and the test reference data (which is used to construct bulk profiles for testing) are distinct. Note that no normalisation is performed as part of this function, it is recommended that data is thouroughly QC'd prior to this analysis and your perfferred normalisation method applied.
 }

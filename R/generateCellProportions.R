@@ -9,6 +9,7 @@
 #' names(bloodProp)<-c("A", "B")
 #' generateCellProportions(bloodProp, c(0,0.5))
 #' @export
+
 generateCellProportions <- function(cellProp, noise){
 	if(!is.null(names(cellProp))){
 		cellWeight = cellProp/sum(cellProp) # standardarize  proportions to sum to 1

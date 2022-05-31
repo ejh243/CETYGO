@@ -11,7 +11,7 @@
 #'
 #' @return A matrix of DNA methylation levels, with the same number of rows as rows in purifiedBetas and the same number of columns as rows in matrixSimProp.
 #'
-#' @example
+#' @examples
 #' # 3 cell type example
 #' cellProps<-matrix(c(0.1,0.4,0.5,0.2,0.2,0.6), ncol = 3)
 #' refBetas<-matrix(runif(10*3, min = 0, max = 1), ncol = 3)

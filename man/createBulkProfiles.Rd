@@ -20,3 +20,14 @@ weighted sum using the
 user-provided proportions to construct bulk tissue profiles in known ratios. There is
 also the option to specifiy the addition of a proportion of noise. If this is required #' a random vector of DNA methylation levels is generated from a uniform distribution.
 }
+\examples{
+# 3 cell type example
+cellProps<-matrix(c(0.1,0.4,0.5,0.2,0.2,0.6), ncol = 3)
+refBetas<-matrix(runif(10*3, min = 0, max = 1), ncol = 3)
+createBulkProfiles(refBetas, cellProps)
+
+# add noise to example
+cellProps<-cbind(cellProps, c(0.1, 0.2))
+colnames(cellProps)<-"Noise"
+createBulkProfiles(refBetas, cellProps)
+}
