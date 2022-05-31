@@ -2,23 +2,27 @@
 % Please edit documentation in R/generateCellProportions.R
 \name{generateCellProportions}
 \alias{generateCellProportions}
-\title{create matrix of cellular composition profiles consisting of proportion of noise and remaining compostion in the ratio of supplied cell types}
+\title{Create matrix of cellular composition profiles consisting of proportion
+of noise and remaining compostion in the ratio of supplied cell types}
 \usage{
 generateCellProportions(cellProp, noise)
 }
 \arguments{
-\item{cellProp}{A vector of the required cellular proportions. Must be named with cell labels.}
+\item{cellProp}{A vector of the required cellular proportions. Must be
+named with cell labels.}
 
 \item{noise}{A vector of the proportion of noise.}
 }
 \value{
-A matrix with length(noise) columns and length(cellProp)+1 columns.
+A matrix with length(noise) columns and length(cellProp)+1
+columns.
 }
 \description{
-create matrix of cellular composition profiles consisting of proportion of noise and remaining compostion in the ratio of supplied cell types
+Create matrix of cellular composition profiles consisting of proportion
+of noise and remaining compostion in the ratio of supplied cell types
 }
 \examples{
-bloodProp<-c(0.2,0.8)
-names(bloodProp)<-c("A", "B")
-generateCellProportions(bloodProp, c(0,0.5))
+meanBloodProp = c(3.01,13.4, 6.13)
+noise = c(seq(0,0.1,0.02))
+generateCellProportions(meanBloodProp, noise)
 }

@@ -32,3 +32,18 @@ Function to implement the Houseman deconvolution method for a provided set refer
 \details{
 We recommend that the training reference data and the test reference data (which is used to construct bulk profiles for testing) are distinct. Note that no normalisation is performed as part of this function, it is recommended that data is thouroughly QC'd prior to this analysis and your perfferred normalisation method applied.
 }
+\examples{
+# create mean DNAm levels for 100 sites
+set.seed(1327)
+meanBetas<-runif(100,min=0,max=1)
+meanCTDiff<-rnorm(100, mean = 0, sd = 0.2)
+refBetas<-cbind(matrix(meanBetas + rnorm(500, mean = 0, sd = 0.01), nrow = 100, byrow = FALSE), 
+matrix(meanBetas + rnorm(500, mean = 0, sd = 0.01) + meanCTDiff, nrow = 100, byrow = FALSE))
+refBetas[refBetas < 0]<-runif(sum(refBetas < 0),0,0.05)
+refBetas[refBetas > 1]<-runif(sum(refBetas > 1),0.95,1)
+testBetas<-cbind(meanBetas, meanBetas+meanCTDiff)+rnorm(200, mean = 0, sd = 0.01)
+testBetas[testBetas < 0]<-runif(sum(testBetas < 0),0,0.05)
+testBetas[testBetas > 1]<-runif(sum(testBetas > 1),0.95,1)
+simProps<-matrix(data = c(0.5,0.5,0.2,0.8), ncol = 2)
+runNoiseSimulations(refBetas, c("A", "B"), c(rep("A", 5), rep("B", 5)), testBetas, simProps)
+}

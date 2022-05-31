@@ -1,23 +1,27 @@
 Package: CETYGO
-Title: Quantifying the accuracy of cellular composition profile derived from DNA methylation.
-Version: 0.0.0.9000
+Title: Quantifying the accuracy of cellular composition profile derived from DNA methylation
+Version: 0.99.0
 Authors@R: 
     c(person("Eilis", "Hannon", , "e.j.hannon@exeter.ac.uk", role = c("cre", "aut"),
            comment = c(ORCID = "0000-0001-6840-072X")),
 		person("Dorethea", "Seiler Vellame", role = c("aut")))
-Description: Functions to quantify the CETYGO (CEll TYpe deconvolution GOodness) score of cellular deconvolution estimates using Houseman's reference based deconvolution method. 
+Description: Functions to quantify the CETYGO (CEll TYpe deconvolution GOodness) score 
+   for cellular deconvolution estimates using Houseman's reference based deconvolution method. 
 License: Artistic-2.0 + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.0
 Depends:
-    R (>= 2.10)
+    R (>= 3.6)
 Imports:
     minfi,
 	genefilter,
 	quadprog,
-	methods
+	methods,
+	graphics, 
+	stats, 
+	utils
 Suggests: 
 	FlowSorted.Blood.450k (>= 1.0.1),
 	FlowSorted.Blood.EPIC,
@@ -27,3 +31,4 @@ Suggests:
 VignetteBuilder: knitr
 URL: https://github.com/ejh243/CETYGO
 BugReports: https://github.com/ejh243/CETYGO/issues
+biocViews: DNAMethylation, Epigenetics, Microarray, MethylationArray, QualityControl

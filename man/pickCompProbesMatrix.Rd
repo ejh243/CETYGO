@@ -13,26 +13,46 @@ pickCompProbesMatrix(
 )
 }
 \arguments{
-\item{rawbetas}{A matrix of DNA methylation levels from reference cell types}
+\item{rawbetas}{A matrix of DNA methylation levels from reference
+cell types}
 
-\item{cellInd}{A vector specifying which cell type eacj column of rawbetas represents}
+\item{cellInd}{A vector specifying which cell type each column of
+rawbetas represents}
 
-\item{cellTypes}{A vector of which cell types in cellInd to include in generation of reference panel}
+\item{cellTypes}{A vector of which cell types in cellInd to include
+in generation of reference panel}
 
 \item{numProbes}{The number of probes for each cell type to select}
 
-\item{probeSelect}{How should probes be selected to distinguish cell types? Options include
-"both", which selects an equal number (50) of probes (with F-stat p-value < 1E-8) with the
-greatest magnitude of effect from the hyper- and hypo-methylated sides, and "any", which
-selects the 100 probes (with F-stat p-value < 1E-8) with the greatest magnitude of difference
-regardless of direction of effect.}
+\item{probeSelect}{How should probes be selected to distinguish
+cell types? Options include
+"both", which selects an equal number (50) of probes (with F-stat
+p-value < 1E-8) with the greatest magnitude of effect from the
+hyper- and hypo-methylated sides, and "any", which
+selects the 100 probes (with F-stat p-value < 1E-8) with the
+greatest magnitude of difference regardless of direction of effect.}
 }
 \value{
-A list with the estimate coefficients, summary of F tests and cell type means.
+A list with the estimate coefficients, summary of F tests
+and cell type means.
 }
 \description{
-Using a DNA methylation dataset containing profiles for a panel of reference cell types
-this function selects the sites for cellular deconvolution and estimates the nessecary coefficients
+Using a DNA methylation dataset containing profiles for a panel of
+reference cell types this function selects the sites for cellular
+deconvolution and estimates the nessecary coefficients
 This function is adapted from minfi pickCompProbes()
 to take a matrix of beta values rather than mset
+}
+\examples{
+# create mean DNAm levels for 100 sites
+set.seed(1327)
+meanBetas<-runif(100,min=0,max=1)
+# generate cell type diffs
+meanCTDiff<-rnorm(100, mean = 0, sd = 0.2)
+# create reference training data
+refBetas<-cbind(matrix(meanBetas + rnorm(500, mean = 0, sd = 0.01), nrow = 100, byrow = FALSE), 
+matrix(meanBetas + rnorm(500, mean = 0, sd = 0.01) + meanCTDiff, nrow = 100, byrow = FALSE))
+refBetas[refBetas < 0]<-runif(sum(refBetas < 0),0,0.05)
+refBetas[refBetas > 1]<-runif(sum(refBetas > 1),0.95,1)
+pickCompProbesMatrix(refBetas, c("A", "B"), c(rep("A", 5), rep("B", 5)), numProbes=10)
 }

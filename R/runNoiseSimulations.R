@@ -11,6 +11,30 @@
 #' @param matrixSimProp A matrix of proportions to combine reference cell types. Each row represents a different combination of cell types. Number of columns must match the number of columns in testBetas, unless the last column is the proportion of "Noise", and must be labelled as such.
 #' @return A matrix with predicted cellular compositions and CETYGO score for each simulated bulk tissue profile.
 #' @export
+#'
+#' @examples
+#' # create mean DNAm levels for 100 sites
+#' set.seed(1327)
+#' meanBetas<-runif(100,min=0,max=1)
+# generate cell type diffs
+#' meanCTDiff<-rnorm(100, mean = 0, sd = 0.2)
+
+## create reference training data
+#' refBetas<-cbind(matrix(meanBetas + rnorm(500, mean = 0, sd = 0.01), nrow = 100, byrow = FALSE), 
+#' matrix(meanBetas + rnorm(500, mean = 0, sd = 0.01) + meanCTDiff, nrow = 100, byrow = FALSE))
+## force to lie between 0 and 1
+#' refBetas[refBetas < 0]<-runif(sum(refBetas < 0),0,0.05)
+#' refBetas[refBetas > 1]<-runif(sum(refBetas > 1),0.95,1)
+
+## create test data
+#' testBetas<-cbind(meanBetas, meanBetas+meanCTDiff)+rnorm(200, mean = 0, sd = 0.01)
+## force to lie between 0 and 1
+#' testBetas[testBetas < 0]<-runif(sum(testBetas < 0),0,0.05)
+#' testBetas[testBetas > 1]<-runif(sum(testBetas > 1),0.95,1)
+
+#' simProps<-matrix(data = c(0.5,0.5,0.2,0.8), ncol = 2)
+
+#' runNoiseSimulations(refBetas, c("A", "B"), c(rep("A", 5), rep("B", 5)), testBetas, simProps)
 
 runNoiseSimulations<-function(trainBetas, trainCellTypes, trainCellInd, testBetas, matrixSimProp){
 	if(rownames(trainBetas) != rownames(testBetas)){

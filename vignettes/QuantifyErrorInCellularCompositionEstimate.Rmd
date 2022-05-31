@@ -1,37 +1,40 @@
 ---
 title: "Quantifying the error associated with estimating cellular composition from DNA methylation profiles"
 author:
-  - Eilis Hannon
+  name: Eilis Hannon
+  affiliation: University of Exeter
+  email: E.J.Hannon@exeter.ac.uk
 package: CETYGO
-
 bibliography: cetygo.bib
 abstract: >
-  A tutorial for how to calculate the CETYGO score for a bulk DNA methylation profile. 
+  A tutorial on calculating the CETYGO score for a bulk DNA methylation profile.
 vignette: >
-  %\VignetteIndexEntry{introduction}
+  %\VignetteIndexEntry{CETYGO User's Guide}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
-output: BiocStyle::html_document:
+output: 
+  BiocStyle::html_document:
     toc_float: true
 ---
 
 
-
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
-```
-
+# Introduction to the CETYGO score
 
 ## Background
 
 A critical challenge in epigenome-wide association studies (EWAS) is that bulk tissue is a heterogeneous mix of different cell types. If the composition of these cell types, specifically the proportions of each cell type, varies across the population under study, and varies in a manner that correlates with the outcome of interest, this will lead to false positive associations at sites in the genome that differ between cell types . As a result, epigenome-wide association analyses routinely include quantitative covariates that capture the heterogeneity in cellular composition across a dataset. As experimentally derived cell counts are often unavailable, proxies for cellular composition can be derived from the bulk tissue profile using a deconvolution algorithm. If the quality of the deconvolution varies either, across studies or within a study, then the utility of these variables as confounders needs to be reconsidered. This could be especially problematic if the accuracy of the deconvolution is systematically biased and is related to any other confounders such as age or sex. Understanding how reliable a set of cellular heterogeneity variables are for any individual sample is of increasing importance, as the interest in quantifying cellular composition has moved beyond just adjusting for it in epigenome-wide association studies, with these estimates also being analysed as variables of interest in their own right.
 
-We have described an accuracy metric that quantifies the **CEll TYpe deconvolution GOodness (CETYGO)** score of a set of cellular heterogeneity variables derived from a genome-wide DNA methylation profile for an individual sample. This R package provides users with functions to estimate these values, by building on the existing functionality available through the minfi package [@minfi]. 
+We have described an accuracy metric that quantifies the **CEll TYpe deconvolution GOodness (CETYGO)** score of a set of cellular heterogeneity variables derived from a genome-wide DNA methylation profile for an individual sample. This R package provides users with functions to estimate these values, by building on the existing functionality available through the `r #Biocpkg("minfi")` package. 
 
-The mathematical details of the CETYGO score can be found in our manuscript:  XXX. Please cite this if you use our R package.
+
+## Mathematical details
+
+
+## Citation
+
+Please cite  XXX if you use CETYGO in your study.
+
+# How to use the CETYGO package
 
 ## Terminology 
 
@@ -46,26 +49,37 @@ CETYGO score - this the metric we developed to assess the accuracy of a profile 
 Houseman's method - a common methodology for distilling the cellular heterogeneity of a bulk tissue into a finite number of quantitative variables. It is a reference-based deconvolution algorithm based on constrained projection and requires reference profiles of the cell types that it aims to estimate.
 
 
-## Install the package
+## Installing CETYGO
 
-The package is available via GitHub [https://github.com/ds420/CETYGO] and can be installed using the devtools package. 
+The [CETYGO package is available via GitHub](https://github.com/ds420/CETYGO) and can be installed using the devtools package. However, there are some pre-requistite packages that need to be installed from Bioconductor first.
 
-```{r setup}
-install.packages("devtools")
+```{r setup, echo = FALSE}
+# install required packages
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install(c("genefilter", "minfi"))
+#install.packages("quadprog")
+
+# install devtools to install from GitHub
+#install.packages("devtools")
 library(devtools)
+```
 
+Now we can install CETYGO direct from GitHub.
 
+```{r}
 install_github("ds420/CETYGO")
 library(CETYGO)
 ```
 
-
+ 
 
 ## Calculating the CETYGO score for whole blood profiles using provided model
 
-Currently most analysts take advantage of the *estimatCellCounts()* function in minfi to generating estimates of cellular heterogeneity using the Houseman algorithm. The underlying workflow of this function is shown below. 
+Currently most analysts take advantage of the *estimatCellCounts()* function in `r #Biocpkg("minfi")` to generating estimates of cellular heterogeneity using the Houseman algorithm. The underlying workflow of this function is shown below. 
 
-```{r flowChart, echo = FALSE}
+```{r flowChart, echo = FALSE, fig.wide = TRUE}
 library(DiagrammeR)
 
 grViz("digraph {
@@ -107,26 +121,30 @@ head(predProp)
 
 ```
 
-Please note that if you use this method, you will likely find that the actual cell composition estimates will differ as we have changed the preprocessing steps.
+Please note that if you use this method, you will likely find that the actual cell composition estimates will differ from any you have estimated with the `r #Biocpkg("minfi")` functions as we have changed the preprocessing steps. In our experience however they are very similar. In fact we demonstrate this later on in the vignette.
 
-If you would like to use this approach but need to generate your own training model, using a different panel of cell types please check out (#custom).
+If you would like to use this approach but need to generate your own training model, using a different panel of cell types please check out the section \@ref(custom).
 
 
 ## Intepretation of the CETYGO score
 
-We have profiled the behaviour of the CETYGO score in a number of situations and provide the following guidance for it's interpretation. 
+We have profiled the behaviour of the CETYGO score when applied to whole blood across a large number of empirical datasets and provide the following guidance for it's interpretation. 
 
 1. CETYGO > 0.1 indicates the sample is not composed of the reference cell types, and is potentially the wrong tissue.
 
-2. Purified cell types have higher CETYGO scores than bulk tissues.
+2. Elevated CETYGO can also be indicative of a technically poor sample.
 
-3. Profiles generated with the EPIC array are associated with higher CETYGO scores than the 450K array.
+3. Purified cell types have higher CETYGO scores than bulk tissues.
 
-4. Using our pre-trained model `modelBloodCoef`, across 3001 whole blood samples profiled with the 450K array, the median CETYGO score was 0.045  and the 95% "inter-quartile" range was 0.040-0.061. Across 3350 whole blood samples profiled with the EPIC array, the median CETYGO score was 0.057 and the  95% "inter-quartile" range was 0.050 - 0.069. We consider this to define an acceptable maximum value. However, it is evident that this is technology and reference panel specific and therefore these boundaries may not be well calibrated for all applications. As a guide we will highlight on the graph below in gray the acceptable values, and with a dashed black line the median value for whole blood data generated with the 450K array, as well as a boxplot of the CETYGO scores calculted for the data we profiled with this tutorial.
+4. Profiles generated with the EPIC array are associated with higher CETYGO scores than the 450K array.
+
+5. Using our pre-trained model `modelBloodCoef`, across 3001 whole blood samples profiled with the 450K array, the median CETYGO score was 0.045  and the 95% "inter-quartile" range was 0.040-0.061. Across 3350 whole blood samples profiled with the EPIC array, the median CETYGO score was 0.057 and the  95% "inter-quartile" range was 0.050 - 0.069. We consider this to define an acceptable maximum value. However, it is evident that this is technology and reference panel specific and therefore these boundaries may not be well calibrated for all applications. As a guide we will highlight on the graph below in gray the acceptable values, and with a dashed black line the median value for whole blood data generated with the 450K array, as well as a boxplot of the CETYGO scores calculted for the data we profiled with this tutorial.
 
 ```{r}
-
+# plot distribution of CETYGO scores
 boxplot(predProp[,"CETYGO"], ylab = "CETYGO", ylim = c(0.04, 0.07))
+
+# add array specific "acceptable" region 
 polygon(c(0,0,2,2), c(0,0.061,0.061,0), col = "grey")
 boxplot(predProp[,"CETYGO"], ylab = "CETYGO", ylim = c(0.04, 0.07), add = TRUE)
 stripchart(predProp[,"CETYGO"], method = "jitter", pch = 19, add = TRUE, col = "blue", vertical = TRUE)
@@ -139,11 +157,12 @@ abline(h = 0.045, lty = 2)
 
 ## Calculating the CETYGO score with the standard workflow
 
-Instead users might wish to follow the standard pipeline implemented in minfi where the reference data and test data are normalized together. To demonstrate this we will use the data available as part of the `FlowSorted.Blood.EPIC` R package. Briefly, this is a dataset which consists of purified blood cell types, and artificial mixtures that reflect whole blood. Conveniently it is provided in an RGChannelSet which we will load below.
+Instead users might wish to follow the standard pipeline implemented in `r #Biocpkg("minfi")` where the reference data and test data are normalized together. To demonstrate this we will use the data available as part of the (FlowSorted.Blood.EPIC)[https://bioconductor.org/packages/release/data/experiment/html/FlowSorted.Blood.EPIC.html] R package. Briefly, this is a dataset which consists of purified blood cell types, and artificial mixtures that reflect whole blood. Conveniently it is provided in an RGChannelSet which we will load below.
 
 
 ```{r}
-library(FlowSorted.Blood.EPIC)
+BiocManager::install("FlowSorted.Blood.EPIC")
+library("FlowSorted.Blood.EPIC")
 hub <- ExperimentHub()
 query(hub, "FlowSorted.Blood.EPIC")
 FlowSorted.Blood.EPIC <- hub[["EH1136"]]
@@ -153,7 +172,7 @@ index <- FlowSorted.Blood.EPIC$CellType == "MIX"
 RGSet.wb <- FlowSorted.Blood.EPIC[,index]
 ```
 
-We can now estimate both the cellular composition estimates, and the CETYGO score from the raw idats with a single command. 
+We can now estimate both the cellular composition estimates, and the CETYGO score from the raw data with a single command. 
 
 
 ```{r}
@@ -162,7 +181,7 @@ head(cellCompRGSet)
 
 ```
 
-Those of you familiar with minfi might notice that our function `estimateCellCountsWithError()` is adapted fro, the minfi function `estimateCellCounts()` and uses the same arguments. For example, if we wish to specify a different inbuilt reference panel we can do so as follows.
+Those of you familiar with `r #Biocpkg("minfi")` might notice that our function `estimateCellCountsWithError()` is adapted from the `r #Biocpkg("minfi")` function `estimateCellCounts()` and uses the same arguments. For example, if we wish to specify a different inbuilt reference panel we can do so as follows.
 
 ```{r}
 cellCompRGSetEPIC<-estimateCellCountsWithError(RGSet.wb, platform = "EPIC", cellTypes = c("NK", "Gran", "CD4T"))
@@ -183,8 +202,8 @@ cellCompMatrix<-projectCellTypeWithError(betas.wb, modelBloodCoef[rowIndex,])
 We can then visualise this comparison below. Note, that the columns are not in the same order.
 
 
-```{r}
-par(mfrow = c(1,2))
+```{r, fig.wide = TRUE, fig.height = 5}
+par(mfrow = c(1,3))
 for(each in colnames(cellCompRGSet)[1:6]){
   plot(cellCompRGSet[,each], cellCompMatrix[,each], pch = 16, xlab = "RGChannelSet", ylab = "Matrix", main = each)
 }
@@ -198,9 +217,9 @@ plot(cellCompRGSet[,"CETYGO"], cellCompMatrix[,"CETYGO"], pch = 16, xlab = "RGCh
 
 
 
-## Generate a custom training model {#custom}
+## Generate a custom training model{#custom}
 
-Here we will walk through how to generate a training model for a custom reference panel. We will use the purified blood cell type data from the `FlowSorted.Blood.EPIC` R package which we loaded earlier
+Here we will walk through how to generate a training model for a custom reference panel. We will use the purified blood cell type data from the `r #Biocpkg(FlowSorted.Blood.EPIC)` R package which we loaded earlier.
 
 ```{r}
 cellTypes.epic = c("Bcell", "CD4T", "CD8T", "Neu", "Mono", "NK")
@@ -230,6 +249,7 @@ Finally, we can use this model to calculate the estimates of cellular heterogene
 
 
 ```{r}
+## identify which sites in the model are present in test data
 rowIndex<-rownames(bulkdata)[rownames(bulkdata) %in% rownames(customModel$coefEsts)]
 predPropCustom<-projectCellTypeWithError(bulkdata, customModel$coefEsts[rowIndex,])
 
@@ -237,9 +257,19 @@ head(predPropCustom)
 
 ```
 
+## Package maintainance and troubleshooting
 
+If you run into any issues with this package please post a GitHub issue so that others who have the same issue can benefit from your experience.
+
+## Session info
+
+```{r}
+
+sessionInfo()
+
+```
 
 ## Acknowledgements
 
-We are grateful to the developers and contributors of the minfi package [https://github.com/hansenlab/minfi]. By making their code open source and available through GitHub has enabled us to implement our metric within the existing framework  ultimately making it easier for users to add it to their workflow.
+We are grateful to the developers and contributors of the `r #Biocpkg("minfi")` package. By making their code open source and available through GitHub has enabled us to implement our metric within the existing framework  ultimately making it easier for users to add it to their workflow.
 
