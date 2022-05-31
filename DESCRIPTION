@@ -6,7 +6,7 @@ Authors@R:
            comment = c(ORCID = "0000-0001-6840-072X")),
 		person("Dorethea", "Seiler Vellame", role = c("aut")))
 Description: Functions to quantify the CETYGO (CEll TYpe deconvolution GOodness) score of cellular deconvolution estimates using Houseman's reference based deconvolution method. 
-License: Artistic-2.0
+License: Artistic-2.0 + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
@@ -16,7 +16,8 @@ Depends:
 Imports:
     minfi,
 	genefilter,
-	quadprog
+	quadprog,
+	methods
 Suggests: 
 	FlowSorted.Blood.450k (>= 1.0.1),
 	FlowSorted.Blood.EPIC,

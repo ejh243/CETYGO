@@ -1,5 +1,12 @@
-importFrom(genefilter, rowFtests)
+import(minfi)
+
+importFrom(genefilter, rowFtests, rowttests)
 importFrom(quadprog, solve.QP)
+importFrom("graphics", "legend", "plot")
+importFrom("methods", "as", "is")
+importFrom("stats", "as.formula", "lm", "model.matrix", "na.omit",
+             "pf", "runif", "vcov")
+importFrom("utils", "data")
 
 export(RMSE)
 export(createBulkProfiles)
