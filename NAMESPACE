@@ -7,7 +7,7 @@ importFrom("methods", "as", "is")
 importFrom("stats", "as.formula", "lm", "model.matrix", "na.omit",
              "pf", "runif", "vcov")
 importFrom("utils", "data")
-importFrom(matrixstats, rowRanges)
+importFrom(matrixStats, rowRanges)
 
 export(RMSE)
 export(createBulkProfiles)
