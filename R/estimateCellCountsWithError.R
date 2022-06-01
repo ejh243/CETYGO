@@ -229,7 +229,7 @@ estimateCellCountsWithError <- function(rgSet, compositeCellType = "Blood",
 }
 
 validationCellType <- function(Y, pheno, modelFix, modelBatch=NULL,
-        L.forFstat = NULL, verbose = FALSE){
+    L.forFstat = NULL, verbose = FALSE){
     N <- dim(pheno)[1]
     pheno$y <- rep(0, N)
     xTest <- model.matrix(modelFix, pheno)

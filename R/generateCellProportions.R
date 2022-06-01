@@ -15,14 +15,14 @@
 #' generateCellProportions(meanBloodProp, noise)
 
 generateCellProportions <- function(cellProp, noise){
-	if(!is.null(names(cellProp))){
-	# standardarize  proportions to sum to 1
-		cellWeight = cellProp/sum(cellProp) 
-		matrixProp = (1 - noise) %o% cellWeight
-		matrixProp = cbind(matrixProp, noise)
-		colnames(matrixProp) = c(names(cellProp), "Noise")
-		return(matrixProp)
-	} else {
-		stop("vector of cellular proportions does not have names")
-	}
+    if(!is.null(names(cellProp))){
+    # standardarize  proportions to sum to 1
+        cellWeight = cellProp/sum(cellProp) 
+        matrixProp = (1 - noise) %o% cellWeight
+        matrixProp = cbind(matrixProp, noise)
+        colnames(matrixProp) = c(names(cellProp), "Noise")
+        return(matrixProp)
+    } else {
+        stop("vector of cellular proportions does not have names")
+    }
 }

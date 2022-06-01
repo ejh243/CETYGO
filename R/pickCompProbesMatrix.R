@@ -32,9 +32,11 @@
 #' # generate cell type diffs
 #' meanCTDiff<-rnorm(100, mean = 0, sd = 0.2)
 #' # create reference training data
-#' refBetas<-cbind(matrix(meanBetas + rnorm(500, mean = 0, sd = 0.01), nrow = 100, byrow = FALSE), 
-#' matrix(meanBetas + rnorm(500, mean = 0, sd = 0.01) + meanCTDiff, nrow = 100, byrow = FALSE))
-## force to lie between 0 and 1
+#' refBetas<-cbind(matrix(meanBetas + rnorm(500, mean = 0, sd = 0.01), 
+#' nrow = 100, byrow = FALSE), 
+#' matrix(meanBetas + rnorm(500, mean = 0, sd = 0.01) + meanCTDiff, 
+#' nrow = 100, byrow = FALSE))
+#' # force to lie between 0 and 1
 #' refBetas[refBetas < 0]<-runif(sum(refBetas < 0),0,0.05)
 #' refBetas[refBetas > 1]<-runif(sum(refBetas > 1),0.95,1)
 #' cellInd<-c(rep("A", 5), rep("B", 5))
@@ -55,7 +57,8 @@ pickCompProbesMatrix <- function(rawbetas, cellInd, cellTypes = NULL,
         M <- dim(Y)[1]
         
         if(is.null(L.forFstat)) {
-            L.forFstat <- diag(sizeModel)[-1,] # All non-intercept coefficients
+		    # All non-intercept coefficients
+            L.forFstat <- diag(sizeModel)[-1,] 
             colnames(L.forFstat) <- colnames(xTest)
             rownames(L.forFstat) <- colnames(xTest)[-1]
         }
@@ -79,7 +82,8 @@ pickCompProbesMatrix <- function(rawbetas, cellInd, cellTypes = NULL,
             try({ # Try to fit a mixed model to adjust for plate
                 if(!is.null(modelBatch)) {
                     fit <- try(lme(modelFix, random=modelBatch, data=pheno[ii,]))
-                    OLS <- inherits(fit,"try-error") # If LME can't be fit, just use OLS
+					# If LME can't be fit, just use OLS
+                    OLS <- inherits(fit,"try-error") 
                 } else
                     OLS <- TRUE
                 
@@ -105,7 +109,7 @@ pickCompProbesMatrix <- function(rawbetas, cellInd, cellTypes = NULL,
         }
         if(verbose)
             cat(" done\n")
-        ## Name the rows so that they can be easily matched to the target data set
+        ## Name the rows so that they can be easily matched to the target data
         rownames(coefEsts) <- rownames(Y)
         colnames(coefEsts) <- names(fitCoef)
         degFree <- nObserved - nClusters - sizeModel + 1
@@ -115,8 +119,10 @@ pickCompProbesMatrix <- function(rawbetas, cellInd, cellTypes = NULL,
         
         out <- list(coefEsts=coefEsts, coefVcovs=coefVcovs, 
             modelFix=modelFix, modelBatch=modelBatch,
-            sigmaIcept=sigmaIcept, sigmaResid=sigmaResid, L.forFstat=L.forFstat, Pval=Pval,
-            orderFstat=order(-Fstat), Fstat=Fstat, nClusters=nClusters, nObserved=nObserved,
+            sigmaIcept=sigmaIcept, sigmaResid=sigmaResid, 
+            L.forFstat=L.forFstat, Pval=Pval,
+            orderFstat=order(-Fstat), Fstat=Fstat, 
+            nClusters=nClusters, nObserved=nObserved,
             degFree=degFree)
         out
     }
@@ -176,47 +182,49 @@ pickCompProbesMatrix <- function(rawbetas, cellInd, cellTypes = NULL,
     pMeans <- colMeans(rawbetas)
     names(pMeans) <- cellInd
     
-    form <- as.formula(sprintf("y ~ %s - 1", paste(levels(cellInd), collapse="+")))
+    form <- as.formula(sprintf("y ~ %s - 1", 
+        paste(levels(cellInd), collapse="+")))
     phenoDF <- as.data.frame(model.matrix(~cellInd-1))
     colnames(phenoDF) <- sub("cellInd", "", colnames(phenoDF))
     if(ncol(phenoDF) == 2) { # two group solution
         X <- as.matrix(phenoDF)
         coefEsts <- t(solve(t(X) %*% X) %*% t(X) %*% t(rawbetas))
     } else { # > 2 group solution
-        tmp <- validationCellType(Y = rawbetas, pheno = phenoDF, modelFix = form)
+        tmp <- validationCellType(Y = rawbetas, pheno = phenoDF, 
+            modelFix = form)
         coefEsts <- tmp$coefEsts
     }
     
     out <- list(coefEsts = coefEsts, compTable = compTable,
-                            sampleMeans = pMeans)
+        sampleMeans = pMeans)
     return(out)
 }
 
 pickCompProbes <- function(mSet, cellTypes = NULL, numProbes = 50,
-                                                     compositeCellType = compositeCellType,
-                                                     probeSelect = probeSelect) {
+    compositeCellType = compositeCellType,
+    probeSelect = probeSelect) {
         .isMatrixBackedOrStop(mSet)
         splitit <- function(x) {
-                split(seq_along(x), x)
+            split(seq_along(x), x)
         }
 
         p <- getBeta(mSet)
         pd <- as.data.frame(colData(mSet))
         if (!is.null(cellTypes)) {
-                if (!all(cellTypes %in% pd$CellType))
-                        stop("elements of argument 'cellTypes' is not part of ",
-                                 "'mSet$CellType'")
-                keep <- which(pd$CellType %in% cellTypes)
-                pd <- pd[keep,]
-                p <- p[,keep]
+            if (!all(cellTypes %in% pd$CellType))
+                stop("elements of argument 'cellTypes' is not part of ",
+                    "'mSet$CellType'")
+            keep <- which(pd$CellType %in% cellTypes)
+            pd <- pd[keep,]
+            p <- p[,keep]
         }
         # NOTE: Make cell type a factor
         pd$CellType <- factor(pd$CellType, levels = cellTypes)
         ffComp <- rowFtests(p, pd$CellType)
         prof <- vapply(
-                X = splitit(pd$CellType),
-                FUN = function(j) rowMeans2(p, cols = j),
-                FUN.VALUE = numeric(nrow(p)))
+            X = splitit(pd$CellType),
+            FUN = function(j) rowMeans2(p, cols = j),
+            FUN.VALUE = numeric(nrow(p)))
         r <- rowRanges(p)
         compTable <- cbind(ffComp, prof, r, abs(r[, 1] - r[, 2]))
         names(compTable)[1] <- "Fstat"
@@ -224,24 +232,24 @@ pickCompProbes <- function(mSet, cellTypes = NULL, numProbes = 50,
                 c("low", "high", "range")
         tIndexes <- splitit(pd$CellType)
         tstatList <- lapply(tIndexes, function(i) {
-                x <- rep(0,ncol(p))
-                x[i] <- 1
-                return(rowttests(p, factor(x)))
+            x <- rep(0,ncol(p))
+            x[i] <- 1
+            return(rowttests(p, factor(x)))
         })
 
         if (probeSelect == "any") {
-                probeList <- lapply(tstatList, function(x) {
-                        y <- x[x[, "p.value"] < 1e-8, ]
-                        yAny <- y[order(abs(y[, "dm"]), decreasing = TRUE), ]
-                        c(rownames(yAny)[seq(numProbes * 2)])
-                })
+            probeList <- lapply(tstatList, function(x) {
+                y <- x[x[, "p.value"] < 1e-8, ]
+                yAny <- y[order(abs(y[, "dm"]), decreasing = TRUE), ]
+                c(rownames(yAny)[seq(numProbes * 2)])
+            })
         } else {
-                probeList <- lapply(tstatList, function(x) {
-                        y <- x[x[, "p.value"] < 1e-8, ]
-                        yUp <- y[order(y[, "dm"], decreasing = TRUE), ]
-                        yDown <- y[order(y[, "dm"], decreasing = FALSE), ]
-                        c(rownames(yUp)[seq_len(numProbes)],
-                            rownames(yDown)[seq_len(numProbes)])
+            probeList <- lapply(tstatList, function(x) {
+                y <- x[x[, "p.value"] < 1e-8, ]
+                yUp <- y[order(y[, "dm"], decreasing = TRUE), ]
+                yDown <- y[order(y[, "dm"], decreasing = FALSE), ]
+                c(rownames(yUp)[seq_len(numProbes)],
+                    rownames(yDown)[seq_len(numProbes)])
                 })
         }
 
@@ -252,17 +260,17 @@ pickCompProbes <- function(mSet, cellTypes = NULL, numProbes = 50,
         names(pMeans) <- pd$CellType
 
         form <- as.formula(
-                sprintf("y ~ %s - 1", paste(levels(pd$CellType), collapse = "+")))
+            sprintf("y ~ %s - 1", paste(levels(pd$CellType), collapse = "+")))
         phenoDF <- as.data.frame(model.matrix(~ pd$CellType - 1))
         colnames(phenoDF) <- sub("^pd\\$CellType", "", colnames(phenoDF))
         if (ncol(phenoDF) == 2) {
-                # Two group solution
-                X <- as.matrix(phenoDF)
-                coefEsts <- t(solve(t(X) %*% X) %*% t(X) %*% t(p))
+            # Two group solution
+            X <- as.matrix(phenoDF)
+            coefEsts <- t(solve(t(X) %*% X) %*% t(X) %*% t(p))
         } else {
-                # > 2 groups solution
-                tmp <- validationCellType(Y = p, pheno = phenoDF, modelFix = form)
-                coefEsts <- tmp$coefEsts
+            # > 2 groups solution
+            tmp <- validationCellType(Y = p, pheno = phenoDF, modelFix = form)
+            coefEsts <- tmp$coefEsts
         }
 
         list(coefEsts = coefEsts,
