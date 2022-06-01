@@ -55,6 +55,8 @@ supplied data be return?}
 cell-type discrimating probes within the mixed and sorted samples.}
 
 \item{verbose}{Should the function be verbose?}
+
+\item{...}{Passed to preprocessQuantile}
 }
 \value{
 A matrix with the estimated proportion of cell types across all

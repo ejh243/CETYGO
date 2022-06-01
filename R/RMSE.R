@@ -13,9 +13,9 @@
 #' observed<-c(0.38, 0.47, 0.25)
 
 RMSE = function(m, o){
-	if(length(m) == length(o)){
-		return(sqrt(mean((m - o)^2)))
-	} else {
-		stop("Input vectors are not the same length")
-	}
+    if(length(m) == length(o)){
+        return(sqrt(mean((m - o)^2)))
+    } else {
+        stop("Input vectors are not the same length")
+    }
 }

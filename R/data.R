@@ -3,6 +3,7 @@
 #' A sample dataset of whole blood DNA methylation profiles from 10 individuals
 #'
 #' @format A matrix with 599 rows and 10 variables
+"bulkdata"
 
 #' Coefficients for 6 blood cell types
 #'
@@ -12,4 +13,4 @@
 #' FlowSorted.Blood.450k R package. 
 #'
 #' @format A matrix with 600 rows and 6 variables
-
+"modelBloodCoef"

@@ -54,5 +54,9 @@ refBetas<-cbind(matrix(meanBetas + rnorm(500, mean = 0, sd = 0.01), nrow = 100, 
 matrix(meanBetas + rnorm(500, mean = 0, sd = 0.01) + meanCTDiff, nrow = 100, byrow = FALSE))
 refBetas[refBetas < 0]<-runif(sum(refBetas < 0),0,0.05)
 refBetas[refBetas > 1]<-runif(sum(refBetas > 1),0.95,1)
-pickCompProbesMatrix(refBetas, c("A", "B"), c(rep("A", 5), rep("B", 5)), numProbes=10)
+cellInd<-c(rep("A", 5), rep("B", 5))
+rownames(refBetas)<-paste0("cg", 1:100)
+pickCompProbesMatrix(rawbetas = refBetas, 
+       cellTypes = c("A", "B"), 
+       cellInd = cellInd, numProbes=10)
 }

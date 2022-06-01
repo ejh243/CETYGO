@@ -63,6 +63,7 @@
 #' @param meanPlot Whether to plots the average DNA methylation across the 
 #' cell-type discrimating probes within the mixed and sorted samples.
 #' @param verbose Should the function be verbose?
+#' @param ... Passed to preprocessQuantile
 #' @return A matrix with the estimated proportion of cell types across all 
 #' sites, CETYGO and number of sites missing from the model.
 #' @export
@@ -98,8 +99,8 @@ estimateCellCountsWithError <- function(rgSet, compositeCellType = "Blood",
 		    referencePlatform '%s' (inferred package name is '%s')",
             compositeCellType, platform, referencePkg))
     }
-    data(list = referencePkg)
-    referenceRGset <- get(referencePkg)
+    
+    referenceRGset <- get(data(list = referencePkg))
     if (rgPlatform != platform) {
         rgSet <- convertArray(
             object = rgSet,

@@ -7,7 +7,7 @@ Authors@R:
 		person("Dorethea", "Seiler Vellame", role = c("aut")))
 Description: Functions to quantify the CETYGO (CEll TYpe deconvolution GOodness) score 
    for cellular deconvolution estimates using Houseman's reference based deconvolution method. 
-License: Artistic-2.0 + file LICENSE
+License: file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
@@ -21,13 +21,20 @@ Imports:
 	methods,
 	graphics, 
 	stats, 
-	utils
+	utils,
+	matrixStats,
+	S4Vectors,
+	SummarizedExperiment,
+	nlme
 Suggests: 
 	FlowSorted.Blood.450k (>= 1.0.1),
 	FlowSorted.Blood.EPIC,
 	IlluminaHumanMethylation450kanno.ilmn12.hg19,
     rmarkdown,
-    knitr
+    knitr,
+    DiagrammeR,
+    devtools,
+    BiocManager
 VignetteBuilder: knitr
 URL: https://github.com/ejh243/CETYGO
 BugReports: https://github.com/ejh243/CETYGO/issues
