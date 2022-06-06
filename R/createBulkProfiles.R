@@ -9,14 +9,15 @@
 #' 
 #' @param purifiedBetas A matrix with DNA methylation levels for reference 
 #' cell types. Format is one column per cell type. 
-#' @param matrixSimProp A matrix of proportions to combine reference cell types. 
-#' Each row represents a different combination of cell types. Number of columns 
-#' must match the number of columns in purifiedBetas, unless the last column 
-#' is the proportion of noise, and must be labelled as such. Columns must be 
-#' named
+#' @param matrixSimProp A matrix of proportions to weight reference cell 
+#' types. Each row represents a different combination of cell types. 
+#' Number of columns must match the number of columns in purifiedBetas, 
+#' unless the last column is the proportion of noise, and must be labelled
+#'  as such. Columns must be named.
 #'
-#' @return A matrix of DNA methylation levels, with the same number of rows as 
-#' rows in purifiedBetas and the same number of columns as rows in matrixSimProp.
+#' @return A matrix of DNA methylation levels, with the same number of rows 
+#' as rows in purifiedBetas and the same number of columns as rows in 
+#' matrixSimProp.
 #'
 #' @examples
 #' # 3 cell type example
@@ -37,7 +38,8 @@ createBulkProfiles<-function(purifiedBetas, matrixSimProp){
     }
     if(colnames(matrixSimProp)[ncol(matrixSimProp)] == "Noise"){
         ## add noise from uniform distribution
-        purifiedBetas <- cbind(purifiedBetas, runif(nrow(purifiedBetas), min = 0, max = 1))
+        purifiedBetas <- cbind(purifiedBetas, 
+                               runif(nrow(purifiedBetas), min = 0, max = 1))
     }
     if(ncol(purifiedBetas) == ncol(matrixSimProp)){
         testBulkBetas <- purifiedBetas %*% t(matrixSimProp)

@@ -20,10 +20,18 @@
 #' samples from the same cell type.
 #' @param trainCellTypes A vector of which cell types to include in the 
 #' deconcolution model.
-#' @param trainCellInd  A vector indicating which cell type each column in trainBetas comes from.
-#' @param testBetas A matrix with DNA methylation levels for reference cell types to construct the bulk tissue profiles from. Format is one column per cell type. Requires the same number of rows as trainBetas and in the same order.
-#' @param matrixSimProp A matrix of proportions to combine reference cell types. Each row represents a different combination of cell types. Number of columns must match the number of columns in testBetas, unless the last column is the proportion of "Noise", and must be labelled as such.
-#' @return A matrix with predicted cellular compositions and CETYGO score for each simulated bulk tissue profile.
+#' @param trainCellInd  A vector indicating which cell type each column in 
+#' trainBetas comes from.
+#' @param testBetas A matrix with DNA methylation levels for reference cell 
+#' types to construct the bulk tissue profiles from. Format is one column per 
+#' cell type. Requires the same number of rows as trainBetas and in the same 
+#' order.
+#' @param matrixSimProp A matrix of proportions to combine reference cell 
+#' types. Each row represents a different combination of cell types. Number 
+#' of columns must match the number of columns in testBetas, unless the last 
+#' column is the proportion of "Noise", and must be labelled as such.
+#' @return A matrix with predicted cellular compositions and CETYGO score for 
+#' each simulated bulk tissue profile.
 #' @export
 #'
 #' @examples

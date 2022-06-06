@@ -64,7 +64,8 @@ pickCompProbesMatrix <- function(rawbetas, cellInd, cellTypes = NULL,
         }
         
         ## Initialize various containers
-        sigmaResid <- sigmaIcept <- nObserved <- nClusters <- Fstat <- rep(NA, M)
+        sigmaResid <- sigmaIcept <- nObserved <- rep(NA, M)
+        nClusters <- Fstat <- rep(NA, M)
         coefEsts <- matrix(NA, M, sizeModel)
         coefVcovs <- list()
         
@@ -81,7 +82,8 @@ pickCompProbesMatrix <- function(rawbetas, cellInd, cellTypes = NULL,
             
             try({ # Try to fit a mixed model to adjust for plate
                 if(!is.null(modelBatch)) {
-                    fit <- try(lme(modelFix, random=modelBatch, data=pheno[ii,]))
+                    fit <- try(lme(modelFix, random=modelBatch, 
+                        data=pheno[ii,]))
 					# If LME can't be fit, just use OLS
                     OLS <- inherits(fit,"try-error") 
                 } else

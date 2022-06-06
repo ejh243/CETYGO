@@ -89,13 +89,15 @@ estimateCellCountsWithError <- function(rgSet, compositeCellType = "Blood",
         annotation(rgSet)[which(names(annotation(rgSet)) == "array")])
     platform <- sub("IlluminaHumanMethylation", "", referencePlatform)
     if ((compositeCellType == "CordBlood") && (!"nRBC" %in% cellTypes)) {
-        message("[estimateCellCountsWithError] Consider including 'nRBC' in argument 'cellTypes' 
+        message("[estimateCellCountsWithError] 
+            Consider including 'nRBC' in argument 'cellTypes' 
 		    for cord blood estimation.\n")
     }
     referencePkg <- sprintf("FlowSorted.%s.%s", compositeCellType, platform)
     subverbose <- max(as.integer(verbose) - 1L, 0L)
     if (!require(referencePkg, character.only = TRUE)) {
-        stop(sprintf("Could not find reference data package for compositeCellType '%s' and 
+        stop(sprintf("Could not find reference data package for 
+            compositeCellType '%s' and 
 		    referencePlatform '%s' (inferred package name is '%s')",
             compositeCellType, platform, referencePkg))
     }
@@ -108,8 +110,8 @@ estimateCellCountsWithError <- function(rgSet, compositeCellType = "Blood",
             verbose = subverbose)
     }
     if (!"CellType" %in% names(colData(referenceRGset))) {
-        stop(sprintf("the reference sorted dataset (in this case '%s') needs to have a phenoData 
-		    column called 'CellType'"),
+        stop(sprintf("the reference sorted dataset (in this case '%s') 
+            needs to have a phenoData column called 'CellType'"),
             names(referencePkg))
     }
     if (sum(colnames(rgSet) %in% colnames(referenceRGset)) > 0) {
@@ -117,8 +119,10 @@ estimateCellCountsWithError <- function(rgSet, compositeCellType = "Blood",
             "reference data ")
     }
     if (!all(cellTypes %in% referenceRGset$CellType)) {
-        stop(sprintf("all elements of argument 'cellTypes' needs to be part of the reference 
-		    phenoData columns 'CellType' (containing the following elements: '%s')",
+        stop(sprintf("all elements of argument 'cellTypes' needs to be part 
+            of the reference 
+		    phenoData columns 'CellType' (containing the following 
+            elements: '%s')",
             paste(unique(referenceRGset$cellType), collapse = "', '")))
     }
     if (length(unique(cellTypes)) < 2) {
@@ -141,7 +145,8 @@ estimateCellCountsWithError <- function(rgSet, compositeCellType = "Blood",
     }
 
     if (verbose) {
-        message("[estimateCellCountsWithError] Combining user data with reference ",
+        message("[estimateCellCountsWithError] 
+                Combining user data with reference ",
                 "(flow sorted) data.\n")
     }
     newpd <- DataFrame(
@@ -160,7 +165,8 @@ estimateCellCountsWithError <- function(rgSet, compositeCellType = "Blood",
     rm(referenceRGset)
 
     if (verbose) {
-        message("[estimateCellCountsWithError] Processing user and reference data ",
+        message("[estimateCellCountsWithError] 
+            Processing user and reference data ",
             "together.\n")
     }
     if (compositeCellType == "CordBlood") {
@@ -185,8 +191,9 @@ estimateCellCountsWithError <- function(rgSet, compositeCellType = "Blood",
     rm(combinedMset)
 
     if (verbose) {
-        message("[estimateCellCountsWithError] Picking probes for composition ",
-                "estimation.\n")
+        message("[estimateCellCountsWithError] 
+            Picking probes for composition ",
+            "estimation.\n")
     }
     compData <- pickCompProbes(
         mSet = referenceMset,
@@ -197,7 +204,8 @@ estimateCellCountsWithError <- function(rgSet, compositeCellType = "Blood",
     # TODO: Shouldn't be necessary to rm() anything
     rm(referenceMset)
 
-    if (verbose) message("[estimateCellCountsWithError] Estimating composition and error.\n")
+    if (verbose) message("[estimateCellCountsWithError] 
+            Estimating composition and error.\n")
     counts <- projectCellTypeWithError(getBeta(mSet)[rownames(coefs), ], coefs)
     rownames(counts) <- colnames(rgSet)
 
@@ -214,9 +222,9 @@ estimateCellCountsWithError <- function(rgSet, compositeCellType = "Blood",
             1 + as.numeric(factor(names(smeans))))
         plot(sampleMeans, pch = 21, bg = sampleColors)
         legend("bottomleft",
-               c("blood", levels(factor(names(smeans)))),
-               col = 1:7,
-               pch = 15)
+            c("blood", levels(factor(names(smeans)))),
+            col = 1:7,
+            pch = 15)
     }
     if (returnAll) {
         return(list(
