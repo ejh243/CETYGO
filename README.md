@@ -33,4 +33,4 @@ The CETYGO package also contains functions to generate constrcted bulk tissue pr
 
 ## Acknowledgements
 
-We are grateful to the developers and contributors of the (minfi)[https://github.com/hansenlab/minfi] package. By making their code open source and available through GitHub has enabled us to implement our metric within the existing framework  ultimately making it easier for users to add it to their workflow.
+We are grateful to the developers and contributors of the [minfi](https://github.com/hansenlab/minfi) package. By making their code open source and available through GitHub has enabled us to implement our metric within the existing framework  ultimately making it easier for users to add it to their workflow.
