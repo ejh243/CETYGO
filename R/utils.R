@@ -22,7 +22,7 @@
 }
 
 validationCellType <- function(Y, pheno, modelFix, modelBatch = NULL,
-                               L.forFstat = NULL, verbose = FALSE) {
+                                L.forFstat = NULL, verbose = FALSE) {
     N <- dim(pheno)[1]
     pheno$y <- rep(0, N)
     xTest <- model.matrix(modelFix, pheno)
@@ -83,7 +83,7 @@ validationCellType <- function(Y, pheno, modelFix, modelBatch = NULL,
             Fstat[j] <- (t(useCoef) %*% solve(useV, useCoef)) / sizeModel
         })
     }
-    if (verbose) cat(" done\n")
+    if (verbose) message(" done\n")
     
     # Name the rows so that they can be easily matched to the target data set
     rownames(coefEsts) <- rownames(Y)

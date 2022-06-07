@@ -66,6 +66,7 @@
 #' @param ... Passed to preprocessQuantile
 #' @return A matrix with the estimated proportion of cell types across all
 #' sites, CETYGO and number of sites missing from the model.
+#' 
 #' @export
 estimateCellCountsWithError <- function(rgSet, compositeCellType = "Blood",
                                         processMethod = "auto", 
@@ -100,15 +101,13 @@ estimateCellCountsWithError <- function(rgSet, compositeCellType = "Blood",
     }
     referencePkg <- sprintf("FlowSorted.%s.%s", compositeCellType, platform)
     subverbose <- max(as.integer(verbose) - 1L, 0L)
-    if (!require(referencePkg, character.only = TRUE)) {
-        stop(sprintf(
-            "Could not find reference data package for
+    message(sprintf(
+            "Loading reference data package for
             compositeCellType '%s' and
-            referencePlatform '%s' (inferred package name is '%s')",
-            compositeCellType, platform, referencePkg
-        ))
-    }
-
+            referencePlatform '%s' (inferred package name is '%s').
+            An error at this stage might mean the relevant package needs 
+            to be installed",
+            compositeCellType, platform, referencePkg))
     referenceRGset <- get(data(list = referencePkg))
     if (rgPlatform != platform) {
         rgSet <- convertArray(

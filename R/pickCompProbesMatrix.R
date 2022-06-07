@@ -16,10 +16,10 @@
 #' @param numProbes The number of probes for each cell type to select
 #' @param probeSelect How should probes be selected to distinguish
 #' cell types? Options include
-#'    "both", which selects an equal number (50) of probes (with F-stat
+#' "both", which selects an equal number (50) of probes (with F-stat
 #' p-value < 1E-8) with the greatest magnitude of effect from the
 #' hyper- and hypo-methylated sides, and "any", which
-#'    selects the 100 probes (with F-stat p-value < 1E-8) with the
+#' selects the 100 probes (with F-stat p-value < 1E-8) with the
 #' greatest magnitude of difference regardless of direction of effect.
 #' @return A list with the estimate coefficients, summary of F tests
 #' and cell type means.
@@ -52,8 +52,7 @@
 #' )
 #'
 pickCompProbesMatrix <- function(rawbetas, cellInd, cellTypes = NULL,
-                                 numProbes = 50, probeSelect = "both") {
-
+                            numProbes = 50, probeSelect = "both") {
     if (!is.null(cellTypes)) {
         if (!all(cellTypes %in% as.character(cellInd))) {
             stop("elements of argument 'cellTypes' is not part of 'cellInd'")
@@ -70,7 +69,7 @@ pickCompProbesMatrix <- function(rawbetas, cellInd, cellTypes = NULL,
     compTable <- cbind(ffComp, prof, r, abs(r[, 1] - r[, 2]))
     names(compTable)[1] <- "Fstat"
     names(compTable)[c(-2, -1, 0) + ncol(compTable)] <- c("low", "high", 
-                                                          "range")
+                                                           "range")
     tIndexes <- splitit(cellInd)
     tstatList <- lapply(tIndexes, function(i) {
         x <- rep(0, ncol(rawbetas))
@@ -90,7 +89,7 @@ pickCompProbesMatrix <- function(rawbetas, cellInd, cellTypes = NULL,
             yUp <- y[order(y[, "dm"], decreasing = TRUE), ]
             yDown <- y[order(y[, "dm"], decreasing = FALSE), ]
             c(rownames(yUp)[seq_len(numProbes)], 
-              rownames(yDown)[seq_len(numProbes)])
+               rownames(yDown)[seq_len(numProbes)])
         })
     }
 
@@ -128,8 +127,8 @@ pickCompProbesMatrix <- function(rawbetas, cellInd, cellTypes = NULL,
 }
 
 pickCompProbes <- function(mSet, cellTypes = NULL, numProbes = 50,
-                           compositeCellType = compositeCellType,
-                           probeSelect = probeSelect) {
+                    compositeCellType = compositeCellType,
+                    probeSelect = probeSelect) {
     .isMatrixBackedOrStop(mSet)
     p <- getBeta(mSet)
     pd <- as.data.frame(colData(mSet))
