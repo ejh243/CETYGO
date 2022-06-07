@@ -21,6 +21,7 @@ Assumes the two vectors are of the same length and that the pairs are
 the same order.
 }
 \examples{
-expected<-c(0.4,0.5,0.2)
-observed<-c(0.38, 0.47, 0.25)
+expected <- c(0.4, 0.5, 0.2)
+observed <- c(0.38, 0.47, 0.25)
+
 }

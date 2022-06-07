@@ -46,20 +46,27 @@ to take a matrix of beta values rather than mset
 \examples{
 # create mean DNAm levels for 100 sites
 set.seed(1327)
-meanBetas<-runif(100,min=0,max=1)
+meanBetas <- runif(100, min = 0, max = 1)
 # generate cell type diffs
-meanCTDiff<-rnorm(100, mean = 0, sd = 0.2)
+meanCTDiff <- rnorm(100, mean = 0, sd = 0.2)
 # create reference training data
-refBetas<-cbind(matrix(meanBetas + rnorm(500, mean = 0, sd = 0.01), 
-nrow = 100, byrow = FALSE), 
-matrix(meanBetas + rnorm(500, mean = 0, sd = 0.01) + meanCTDiff, 
-nrow = 100, byrow = FALSE))
+refBetas <- cbind(
+    matrix(meanBetas + rnorm(500, mean = 0, sd = 0.01),
+        nrow = 100, byrow = FALSE
+    ),
+    matrix(meanBetas + rnorm(500, mean = 0, sd = 0.01) + meanCTDiff,
+        nrow = 100, byrow = FALSE
+    )
+)
 # force to lie between 0 and 1
-refBetas[refBetas < 0]<-runif(sum(refBetas < 0),0,0.05)
-refBetas[refBetas > 1]<-runif(sum(refBetas > 1),0.95,1)
-cellInd<-c(rep("A", 5), rep("B", 5))
-rownames(refBetas)<-paste0("cg", 1:100)
-pickCompProbesMatrix(rawbetas = refBetas, 
-       cellTypes = c("A", "B"), 
-       cellInd = cellInd, numProbes=10)
+refBetas[refBetas < 0] <- runif(sum(refBetas < 0), 0, 0.05)
+refBetas[refBetas > 1] <- runif(sum(refBetas > 1), 0.95, 1)
+cellInd <- c(rep("A", 5), rep("B", 5))
+rownames(refBetas) <- paste0("cg", seq_len(100))
+pickCompProbesMatrix(
+    rawbetas = refBetas,
+    cellTypes = c("A", "B"),
+    cellInd = cellInd, numProbes = 10
+)
+
 }

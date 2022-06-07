@@ -21,14 +21,22 @@ samples from the same cell type.}
 \item{trainCellTypes}{A vector of which cell types to include in the
 deconcolution model.}
 
-\item{trainCellInd}{A vector indicating which cell type each column in trainBetas comes from.}
+\item{trainCellInd}{A vector indicating which cell type each column in
+trainBetas comes from.}
 
-\item{testBetas}{A matrix with DNA methylation levels for reference cell types to construct the bulk tissue profiles from. Format is one column per cell type. Requires the same number of rows as trainBetas and in the same order.}
+\item{testBetas}{A matrix with DNA methylation levels for reference cell
+types to construct the bulk tissue profiles from. Format is one column per
+cell type. Requires the same number of rows as trainBetas and in the same
+order.}
 
-\item{matrixSimProp}{A matrix of proportions to combine reference cell types. Each row represents a different combination of cell types. Number of columns must match the number of columns in testBetas, unless the last column is the proportion of "Noise", and must be labelled as such.}
+\item{matrixSimProp}{A matrix of proportions to combine reference cell
+types. Each row represents a different combination of cell types. Number
+of columns must match the number of columns in testBetas, unless the last
+column is the proportion of "Noise", and must be labelled as such.}
 }
 \value{
-A matrix with predicted cellular compositions and CETYGO score for each simulated bulk tissue profile.
+A matrix with predicted cellular compositions and CETYGO score for
+each simulated bulk tissue profile.
 }
 \description{
 Function to implement the Houseman deconvolution method for a provided
@@ -49,31 +57,38 @@ this analysis and your perfferred normalisation method applied.
 \examples{
 # create mean DNAm levels for 100 sites
 set.seed(1327)
-meanBetas<-runif(100,min=0,max=1)
+meanBetas <- runif(100, min = 0, max = 1)
 # generate cell type diffs
-meanCTDiff<-rnorm(100, mean = 0, sd = 0.2)
+meanCTDiff <- rnorm(100, mean = 0, sd = 0.2)
 # create reference training data
-refBetas<-cbind(matrix(meanBetas + 
-    rnorm(500, mean = 0, sd = 0.01), 
-    nrow = 100, byrow = FALSE), 
-matrix(meanBetas + rnorm(500, mean = 0, sd = 0.01) + 
-    meanCTDiff, nrow = 100, byrow = FALSE))
+refBetas <- cbind(
+    matrix(meanBetas +
+        rnorm(500, mean = 0, sd = 0.01),
+    nrow = 100, byrow = FALSE
+    ),
+    matrix(meanBetas + rnorm(500, mean = 0, sd = 0.01) +
+        meanCTDiff, nrow = 100, byrow = FALSE)
+)
 # force to lie between 0 and 1
-refBetas[refBetas < 0]<-runif(sum(refBetas < 0),0,0.05)
-refBetas[refBetas > 1]<-runif(sum(refBetas > 1),0.95,1)
-rownames(refBetas)<-paste0("cg", 1:100)
+refBetas[refBetas < 0] <- runif(sum(refBetas < 0), 0, 0.05)
+refBetas[refBetas > 1] <- runif(sum(refBetas > 1), 0.95, 1)
+rownames(refBetas) <- paste0("cg", 1:100)
 # create test data
-testBetas<-cbind(meanBetas, meanBetas+meanCTDiff)+
+testBetas <- cbind(meanBetas, meanBetas + meanCTDiff) +
     rnorm(200, mean = 0, sd = 0.01)
 # force to lie between 0 and 1
-testBetas[testBetas < 0]<-runif(sum(testBetas < 0),0,0.05)
-testBetas[testBetas > 1]<-runif(sum(testBetas > 1),0.95,1)
-rownames(testBetas)<-paste0("cg", 1:100)
-simProps<-matrix(data = c(0.5,0.5,0.2,0.8), ncol = 2)
+testBetas[testBetas < 0] <- runif(sum(testBetas < 0), 0, 0.05)
+testBetas[testBetas > 1] <- runif(sum(testBetas > 1), 0.95, 1)
+rownames(testBetas) <- paste0("cg", 1:100)
+simProps <- matrix(data = c(0.5, 0.5, 0.2, 0.8), ncol = 2)
+colnames(simProps) <- c("A", "B")
 
-runNoiseSimulations(trainBetas = refBetas, 
-trainCellTypes = c("A", "B"), 
-trainCellInd = c(rep("A", 5), rep("B", 5)), 
-testBetas = testBetas, 
-matrixSimProp = simProps)
+runNoiseSimulations(
+    trainBetas = refBetas,
+    trainCellTypes = c("A", "B"),
+    trainCellInd = c(rep("A", 5), rep("B", 5)),
+    testBetas = testBetas,
+    matrixSimProp = simProps
+)
+
 }

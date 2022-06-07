@@ -22,8 +22,9 @@ Create matrix of cellular composition profiles consisting of proportion
 of noise and remaining compostion in the ratio of supplied cell types
 }
 \examples{
-meanBloodProp = c(3.01,13.4, 6.13)
-names(meanBloodProp)<-c("Bcell", "CDT4+", "CDT8")
-noise = c(seq(0,0.1,0.02))
+meanBloodProp <- c(3.01, 13.4, 6.13)
+names(meanBloodProp) <- c("Bcell", "CDT4+", "CDT8")
+noise <- c(seq(0, 0.1, 0.02))
 generateCellProportions(meanBloodProp, noise)
+
 }

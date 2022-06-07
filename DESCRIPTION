@@ -1,19 +1,22 @@
 Package: CETYGO
-Title: Quantifying the accuracy of cellular composition profile derived from DNA methylation
+Title: Quantifying the accuracy of cellular deconvolution 
 Version: 0.99.0
 Authors@R: 
     c(person("Eilis", "Hannon", , "e.j.hannon@exeter.ac.uk", role = c("cre", "aut"),
            comment = c(ORCID = "0000-0001-6840-072X")),
 		person("Dorethea", "Seiler Vellame", role = c("aut")))
-Description: Functions to quantify the CETYGO (CEll TYpe deconvolution GOodness) score 
-   for cellular deconvolution estimates using Houseman's reference based deconvolution method. 
+Description: A package to quantify the CETYGO (CEll TYpe deconvolution GOodness) score 
+   for cellular deconvolution estimates calcuated using Houseman's reference based deconvolution method. 
+   Extends functionality in minfi package and therefore is primarily deisgned for analysis of DNA 
+   methlytaion datasets generated with Illumina microarrays. Additioanlly provides functions to perform simulations to assess the
+   accuracy of new cell type reference panels.
 License: file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.0
 Depends:
-    R (>= 3.6)
+    R (>= 3.5)
 Imports:
     minfi,
 	genefilter,

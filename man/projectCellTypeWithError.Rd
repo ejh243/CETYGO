@@ -7,24 +7,26 @@
 projectCellTypeWithError(YIN, coefs)
 }
 \arguments{
-\item{YIN}{a matrix of DNA methylation levels from the samples that require cell
-composition to be estimated.}
+\item{YIN}{a matrix of DNA methylation levels from the samples that require
+cell composition to be estimated.}
 
-\item{coefs}{A matrix of deconvolution model parameters including coefficients.
-This input can be generated with the pickCompProbesMatrix()$coefs}
+\item{coefs}{A matrix of deconvolution model parameters including
+coefficients. This input can be generated with the
+pickCompProbesMatrix()$coefs}
 }
 \value{
-A matrix with the estimated proportion of cell types, CETYGO and the number of
-sites missing from the model.
+A matrix with the estimated proportion of cell types, CETYGO and
+the number of sites missing from the model.
 }
 \description{
-Estimate the cellular composition from a DNA methylation profile and calculate
-the CETYGO score error metric associated with this estimate.
+Estimate the cellular composition from a DNA methylation profile and
+calculate the CETYGO score error metric associated with this estimate.
 }
 \examples{
-# using pre-trained model for whole blood provided with the package and sample whole blood profiles
-rowIndex<-rownames(bulkdata)[rownames(bulkdata) \%in\% rownames(modelBloodCoef)]
-predProp<-projectCellTypeWithError(bulkdata, modelBloodCoef[rowIndex,])
+# using pre-trained model for whole blood provided with the package and
+# sample whole blood profiles
+rInd <- rownames(bulkdata)[rownames(bulkdata) \%in\% rownames(modelBloodCoef)]
+predProp <- projectCellTypeWithError(bulkdata, modelBloodCoef[rInd, ])
 
 head(predProp)
 }

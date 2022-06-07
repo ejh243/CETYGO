@@ -12,8 +12,8 @@ modelBloodCoef
 }
 \description{
 Coefficients for blood cell types for use in deconvoluting cell composition
-from whole blood profiles. These data were generated using the pickCompProbes()
-function from the minfi package and DNA methylation data from the
-FlowSorted.Blood.450k R package.
+from whole blood profiles. These data were generated using the
+pickCompProbes() function from the minfi package and DNA methylation data
+from the FlowSorted.Blood.450k R package.
 }
 \keyword{datasets}

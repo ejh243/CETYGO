@@ -7,9 +7,10 @@ importFrom(quadprog, solve.QP)
 importFrom(graphics, legend, plot)
 importFrom(methods, as, is)
 importFrom(stats, as.formula, lm, model.matrix, 
-           na.omit, pf, runif, vcov)
+    pf, runif, vcov)
 importFrom(utils, data)
-importFrom(matrixStats, rowRanges, rowMeans2, colMeans2)
+importFrom(matrixStats, rowMeans2, 
+    colMeans2)
 importFrom(nlme, lme, getVarCov)
 
 export(RMSE)
