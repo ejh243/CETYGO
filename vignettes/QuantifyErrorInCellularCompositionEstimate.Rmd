@@ -202,7 +202,7 @@ head(predProp)
 
 ```
 
-Please note that if you use this method and pre=trained model with your data, 
+Please note that if you use this method and pre-trained model with your data, 
 you will likely find that the actual cell composition estimates will differ from
 any you have estimated with the `r Biocpkg("minfi")` functions as we have 
 changed the preprocessing steps. In our experience however they are very 
