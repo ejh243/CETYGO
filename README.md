@@ -4,7 +4,9 @@
 
 ## Citation
 
-
+Uncertainty quantification of reference based cellular deconvolution algorithms
+Dorothea Seiler Vellame, Gemma Shireby, Ailsa MacCalman, Emma L Dempster, Joe Burrage, Tyler Gorrie-Stone, Leonard S Schalkwyk, Jonathan Mill, Eilis Hannon
+bioRxiv 2022.06.15.496235; doi: https://doi.org/10.1101/2022.06.15.496235
 
 ## Installation 
 
@@ -72,16 +74,30 @@ calibrated for all applications.
 
 ## Mathematical details
 
-The CETYGO score captures the deviation between the observed DNAm profile and the expected profile for the given set of estimated cell type proportions. We can define the DNA methylation profile of a bulk tissue as the sum of DNA methylation levels measured in the constituent cell types weighted by the proportion of total cells represented by that cell type (Equation 1). 
+The CETYGO score captures the deviation between the observed DNAm profile and the expected profile for the given set of estimated cell type proportions. We can define the DNA methylation profile of a bulk tissue as the sum of DNA methylation levels measured in the constituent cell types weighted by the proportion of total cells represented by that cell type. 
 
-
+**Equation 1**
 $$B_{i,j}=\sum_{k=1}^N \left( p_{i,k} C_{i,j,k} \right)$$
-(Equation 1)
+
 where 
-	$$B_{i,j}$$ represents the DNA methylation level in the bulk tissue for sample i at site j
-	$$p_{i,k}$$ represents the proportion of cell type k in sample i
-	$$C_{i,j,k}$$ represents the DNA methylation level for sample i at site j in cell type k, for N different cell types. 
+
+- $B_{i,j}$ represents the DNA methylation level in the bulk tissue for sample i at site j
+- $p_{i,k}$ represents the proportion of cell type k in sample i
+- $C_{i,j,k}$ represents the DNA methylation level for sample i at site j in cell type k, for N different cell types 
     
+To estimate estimate $p_{i,k}$ for all (major) cell types, we can take advantage of reference profiles (i.e. $C_{i,j,k}$) available to the research community and methodologies, such as Houseman’s constraint projection approach, to solve for the unknown $p_{i,k}$. 
+
+If the estimated cell proportions (denoted $\hat{p_{i,k}}$ ) are accurate then the expected bulk tissue profile given this composition of cell types should closely resemble the observed data. We can substitute our estimated cell proportions, ($\hat{p_{i,k}}$), back into Equation 1, to calculate the expected profile of DNA methylation values. 
+
+**Equation 2**
+
+$$\hat{B_{i,j}}=\sum_{k=1}^N \left( \hat{p_{i,k}} C_{i,j,k} \right)$$
+
+CETYGO is then defined as the root mean square error (RMSE) between the observed bulk DNA methylation profile and the expected profile across the M cell type specific DNA methylation sites used to perform the deconvolution. 
+
+**Equation 3**
+
+$$ CETYGO_{i} = RMSE (B_{i}, \hat{B_{i}}) $$
 
 ## Additional package functionality
 
