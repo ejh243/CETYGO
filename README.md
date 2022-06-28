@@ -1,6 +1,8 @@
 # CETYGO (CEll TYpe deconvolution GOodness)
 
- We have developed an accuracy metric that quantifies the **CEll TYpe deconvolution GOodness (CETYGO)** score of a set of cellular heterogeneity variables derived from a genome-wide DNA methylation profile for an individual sample. This R package provides users with functions to estimate these values, by building on the existing functionality available through the Biocpkg("minfi") package. While theorhetically the CETYGO score can be used in conjunction with any reference based deconvolution method, this package only contains code to calculate it in combination with Houseman's algorithm. By integrating our extension on top of the popular minfi package, means users can take advantage of the range of reference panels already formated for use, and add the calculation of the CETYGO score into their workflow with minimal changes to their existing scripts. 
+The majority of epigenetic epidemiology studies to date have generated genome-wide profiles from bulk tissues (e.g. whole blood) however these are vulnerable to confounding from variation in cellular composition. Proxies for cellular composition can be mathematically derived from the bulk tissue profiles using a deconvolution algorithm however, there is no method to assess the validity of these estimates for a dataset where the true cellular proportions are unknown. We have developed an accuracy metric that quantifies the **CEll TYpe deconvolution GOodness (CETYGO)** score of a set of cellular heterogeneity variables derived from a genome-wide DNA methylation profile for an individual sample. The CETYGO score captures the deviation between a sample’s DNAm profile and its expected profile given the estimated cellular proportions and cell type reference profiles
+
+This repository contains an R package with functions to estimate CETYGO. It builds on the existing functionality available through the minfi package, meaning it is straightforward to incorporate into existing pipelines and users can take advantage of the range of reference panels compatible with that methodology. 
 
 ## Citation
 
@@ -30,7 +32,15 @@ install_github("ds420/CETYGO")
 
 ## Quick Start
 
-Once you have successfully installed the CETYGO package you can recalculate your cell composition variables and associated CETYGO score. Within the package we provide ```bulkdata``` an example set of whole blood DNA methylation profiles to demonstate how to use the package as follows. 
+Once you have successfully installed the CETYGO package you can recalculate your cell composition variables and associated CETYGO score. 
+
+Within the CETYGO package we have provided functions and a a pre-trained model ```modelBloodCoef``` to 
+enable the estimate of the composition of major blood cell types, as well as the CETYGO score
+from a matrix of (normalised) beta values. We have also provided 10 
+exemplar whole blood profiles generated with the 450K array in the R object 
+```bulkdata```. Using these together we can quickly recalculate both the cellular 
+proportions for six blood cell types and the CETYGO score for each sample. This 
+can be done with the following code.
 
 ```
 
