@@ -75,7 +75,7 @@ calibrated for all applications.
 The CETYGO score captures the deviation between the observed DNAm profile and the expected profile for the given set of estimated cell type proportions. We can define the DNA methylation profile of a bulk tissue as the sum of DNA methylation levels measured in the constituent cell types weighted by the proportion of total cells represented by that cell type (Equation 1). 
 
 
-$$B_{i,j}=\sum_{k=1}^N \left p_{i,k} C_{i,j,k} \right$$
+$$B_{i,j}=\sum_{k=1}^N \left( p_{i,k} C_{i,j,k} \right)$$
 (Equation 1)
 where 
 	$$B_{i,j}$$ represents the DNA methylation level in the bulk tissue for sample i at site j
