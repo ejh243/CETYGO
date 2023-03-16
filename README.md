@@ -6,9 +6,7 @@ This repository contains an R package with functions to estimate CETYGO. It buil
 
 ## Citation
 
-Uncertainty quantification of reference based cellular deconvolution algorithms
-Dorothea Seiler Vellame, Gemma Shireby, Ailsa MacCalman, Emma L Dempster, Joe Burrage, Tyler Gorrie-Stone, Leonard S Schalkwyk, Jonathan Mill, Eilis Hannon
-bioRxiv 2022.06.15.496235; doi: https://doi.org/10.1101/2022.06.15.496235
+Vellame DS, Shireby G, MacCalman A, Dempster EL, Burrage J, Gorrie-Stone T, Schalkwyk LS, Mill J, Hannon E. Uncertainty quantification of reference-based cellular deconvolution algorithms. Epigenetics. 2023 Dec;18(1):2137659. doi: 10.1080/15592294.2022.2137659. Epub 2022 Dec 20. PMID: 36539387; PMCID: PMC9980651.
 
 ## Installation 
 
