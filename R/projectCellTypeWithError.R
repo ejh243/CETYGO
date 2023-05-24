@@ -31,12 +31,12 @@ projectCellTypeWithError <- function(YIN, coefs) {
 	
     ## subset the CpGs in YIN
 	sharedProbes<-intersect(rownames(coefs), rownames(YIN))
-	if(length(sharedProbes) < 10){
+	if(length(sharedProbes) < 5){
 		stop(paste0("Only ", length(sharedProbes), " probes in common between trained model and bulk data. Stopping."))
 		
 	} else {
-		if(length(sharedProbes) < 100){
-		warning("Less than 100 probes in common between trained model and bulk data, this might affect the accuracy of the deconvolution")
+		if(length(sharedProbes) < 50){
+		warning("Less than 50 probes in common between trained model and bulk data, this might affect the accuracy of the deconvolution")
 		}
 	}
     YIN <- YIN[sharedProbes, ]
