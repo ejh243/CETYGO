@@ -21,10 +21,6 @@
 #' @export
 projectCellTypeWithError <- function(YIN, coefs) {
 
-    ## subset the CpGs in YIN
-    YIN <- YIN[rownames(coefs), ]
-    coefCellTypeIN <- coefs
-
     ## if there's only 1 sample, pretend there are 2 so it doesn't break
     if (ncol(as.matrix(YIN)) == 1) {
         sampleDup <- 1
@@ -32,16 +28,20 @@ projectCellTypeWithError <- function(YIN, coefs) {
     } else {
         sampleDup <- 0
     }
-
+	
     ## subset the CpGs in YIN
-    YINtemp <- matrix(nrow = nrow(coefs), ncol = ncol(YIN), data = NA)
-    rownames(YINtemp) <- rownames(coefs)
-    colnames(YINtemp) <- colnames(YIN)
-    YINtemp <- YIN[which(rownames(YIN) %in% rownames(coefs)), ]
-    YINtemp <- YINtemp[match(rownames(coefs), rownames(YINtemp)), ]
-    rownames(YINtemp) <- rownames(coefs)
-    YIN <- YINtemp
-    coefCellTypeIN <- coefs
+	sharedProbes<-intersect(rownames(coefs), rownames(YIN))
+	if(length(sharedProbes) < 10){
+		stop(paste0("Only ", length(sharedProbes), " probes in common between trained model and bulk data. Stopping."))
+		
+	} else {
+		if(length(sharedProbes) < 100){
+		warning("Less than 100 probes in common between trained model and bulk data, this might affect the accuracy of the deconvolution")
+		}
+	}
+    YIN <- YIN[sharedProbes, ]
+    coefCellTypeIN <- coefs[sharedProbes,]
+
 
     projectCellType <- function(Y, coefCellType, contrastCellType = NULL,
                                 nonnegative = TRUE, lessThanOne = FALSE) {
@@ -128,8 +128,9 @@ projectCellTypeWithError <- function(YIN, coefs) {
 
     mixCoef <- projectCellType(YIN, coefCellTypeIN)
     CETYGO <- sapply(seq_len(nrow(mixCoef)), getErrorPerSample)
+	nMissingAll<-nrow(coefs) - nrow(coefCellTypeIN)
     nCGmissing <- apply(YIN, 2, function(x) {
-        sum(is.na(x))
+        sum(is.na(x)) + nMissingAll
     })
     mixCoef <- cbind(mixCoef, CETYGO, nCGmissing)
     if (sampleDup == 1) {
