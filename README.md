@@ -107,6 +107,10 @@ CETYGO is then defined as the root mean square error (RMSE) between the observed
 
 $$ CETYGO_{i} = RMSE (B_{i}, \hat{B_{i}}) $$
 
+## Brain reference panels
+
+A tutorial on the brain reference panels that are available through CETYGO is [available here](https://github.com/ds420/CETYGO/wiki/Deconvolution-of-brain-cell-types)
+
 ## Additional package functionality
 
 The CETYGO package also contains functions to generate constrcted bulk tissue profile from profiles of purified cell types at fixed proportions, both with and without noise. These may useful for testing out new reference panels. 
