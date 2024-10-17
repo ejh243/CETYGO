@@ -6,7 +6,13 @@ This repository contains an R package with functions to estimate CETYGO. It buil
 
 ## Citation
 
+If you use the cetygo score please reference:
+
 Vellame DS, Shireby G, MacCalman A, Dempster EL, Burrage J, Gorrie-Stone T, Schalkwyk LS, Mill J, Hannon E. Uncertainty quantification of reference-based cellular deconvolution algorithms. Epigenetics. 2023 Dec;18(1):2137659. doi: 10.1080/15592294.2022.2137659. Epub 2022 Dec 20. PMID: 36539387; PMCID: PMC9980651.
+
+If you use the brain cell type reference panel please reference: 
+
+Hannon, E., Dempster, E.L., Davies, J.P. et al. Quantifying the proportion of different cell types in the human cortex using DNA methylation profiles. BMC Biol 22, 17 (2024). https://doi.org/10.1186/s12915-024-01827-y
 
 ## Installation 
 
