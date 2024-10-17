@@ -115,7 +115,7 @@ $$ CETYGO_{i} = RMSE (B_{i}, \hat{B_{i}}) $$
 
 ## Brain reference panels
 
-A tutorial on the brain reference panels that are available through CETYGO is [available here](https://github.com/ds420/CETYGO/wiki/Deconvolution-of-brain-cell-types)
+A tutorial on the human brain reference panels that are available through CETYGO is [available here](https://github.com/ds420/CETYGO/wiki/Deconvolution-of-brain-cell-types)
 
 ## Additional package functionality
 
