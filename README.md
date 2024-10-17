@@ -31,7 +31,7 @@ install.packages("devtools")
 library(devtools)
 
 
-install_github("ds420/CETYGO")
+install_github("ejh243/CETYGO")
 ```
 
 ## Quick Start
